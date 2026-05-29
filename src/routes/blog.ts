@@ -102,7 +102,7 @@ blogRoutes.post('/admin', authMiddleware, zValidator('json', createBlogSchema), 
 
 // PUT /api/blog/admin/:id — Update post
 blogRoutes.put('/admin/:id', authMiddleware, zValidator('json', updateBlogSchema), async (c) => {
-  const id = c.req.param('id');
+  const id = c.req.param('id') as string;
   const body = c.req.valid('json');
 
   const updateData: any = { ...body, updatedAt: new Date() };
@@ -128,7 +128,7 @@ blogRoutes.put('/admin/:id', authMiddleware, zValidator('json', updateBlogSchema
 
 // DELETE /api/blog/admin/:id — Delete post
 blogRoutes.delete('/admin/:id', authMiddleware, async (c) => {
-  const id = c.req.param('id');
+  const id = c.req.param('id') as string;
 
   const [deleted] = await db.delete(blogPosts).where(eq(blogPosts.id, id)).returning();
 

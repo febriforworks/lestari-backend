@@ -33,7 +33,7 @@ testimonialRoutes.post('/admin', authMiddleware, zValidator('json', createTestim
 
 // PUT /api/testimonials/admin/:id — Update
 testimonialRoutes.put('/admin/:id', authMiddleware, zValidator('json', updateTestimonialSchema), async (c) => {
-  const id = c.req.param('id');
+  const id = c.req.param('id') as string;
   const body = c.req.valid('json');
 
   const [testimonial] = await db.update(testimonials)
@@ -50,7 +50,7 @@ testimonialRoutes.put('/admin/:id', authMiddleware, zValidator('json', updateTes
 
 // DELETE /api/testimonials/admin/:id — Delete
 testimonialRoutes.delete('/admin/:id', authMiddleware, async (c) => {
-  const id = c.req.param('id');
+  const id = c.req.param('id') as string;
   const [deleted] = await db.delete(testimonials).where(eq(testimonials.id, id)).returning();
 
   if (!deleted) {

@@ -34,7 +34,7 @@ contactRoutes.get('/admin/messages', authMiddleware, async (c) => {
 
 // PATCH /api/contact/admin/messages/:id/read — Mark as read
 contactRoutes.patch('/admin/messages/:id/read', authMiddleware, async (c) => {
-  const id = c.req.param('id');
+  const id = c.req.param('id') as string;
 
   const [updated] = await db.update(contactMessages)
     .set({ isRead: true, updatedAt: new Date() })
@@ -50,7 +50,7 @@ contactRoutes.patch('/admin/messages/:id/read', authMiddleware, async (c) => {
 
 // DELETE /api/contact/admin/messages/:id — Delete message
 contactRoutes.delete('/admin/messages/:id', authMiddleware, async (c) => {
-  const id = c.req.param('id');
+  const id = c.req.param('id') as string;
   const [deleted] = await db.delete(contactMessages).where(eq(contactMessages.id, id)).returning();
 
   if (!deleted) {

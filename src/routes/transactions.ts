@@ -143,7 +143,7 @@ router.post('/admin', zValidator('json', transactionSchema), async (c) => {
 // PUT /api/transactions/admin/:id
 // Update an existing transaction
 router.put('/admin/:id', zValidator('json', transactionSchema), async (c) => {
-  const id = c.req.param('id');
+  const id = c.req.param('id') as string;
   const data = c.req.valid('json');
 
   try {
@@ -170,7 +170,7 @@ router.put('/admin/:id', zValidator('json', transactionSchema), async (c) => {
 // DELETE /api/transactions/admin/:id
 // Delete a transaction
 router.delete('/admin/:id', async (c) => {
-  const id = c.req.param('id');
+  const id = c.req.param('id') as string;
 
   try {
     const deleted = await db.delete(transactions).where(eq(transactions.id, id)).returning();

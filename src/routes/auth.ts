@@ -42,7 +42,7 @@ auth.post('/login', zValidator('json', loginSchema), async (c) => {
 
 // GET /api/auth/me
 auth.get('/me', authMiddleware, async (c) => {
-  const userId = c.get('userId');
+  const userId = (c.get as any)('userId') as string;
 
   const user = await db.query.adminUsers.findFirst({
     where: eq(adminUsers.id, userId),

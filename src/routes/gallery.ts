@@ -31,7 +31,7 @@ galleryRoutes.post('/admin', authMiddleware, zValidator('json', createGallerySch
 
 // DELETE /api/gallery/admin/:id — Delete
 galleryRoutes.delete('/admin/:id', authMiddleware, async (c) => {
-  const id = c.req.param('id');
+  const id = c.req.param('id') as string;
   const [deleted] = await db.delete(galleryItems).where(eq(galleryItems.id, id)).returning();
 
   if (!deleted) {

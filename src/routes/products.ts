@@ -83,7 +83,7 @@ productRoutes.post('/admin', authMiddleware, zValidator('json', createProductSch
 
 // PUT /api/admin/products/:id — Update product
 productRoutes.put('/admin/:id', authMiddleware, zValidator('json', updateProductSchema), async (c) => {
-  const id = c.req.param('id');
+  const id = c.req.param('id') as string;
   const body = c.req.valid('json');
 
   const updateData: any = { ...body, updatedAt: new Date() };
@@ -102,7 +102,7 @@ productRoutes.put('/admin/:id', authMiddleware, zValidator('json', updateProduct
 
 // DELETE /api/admin/products/:id — Delete product
 productRoutes.delete('/admin/:id', authMiddleware, async (c) => {
-  const id = c.req.param('id');
+  const id = c.req.param('id') as string;
 
   const [deleted] = await db.delete(products).where(eq(products.id, id)).returning();
 
