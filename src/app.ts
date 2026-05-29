@@ -9,6 +9,7 @@ import contactRoutes from './routes/contact.js';
 import galleryRoutes from './routes/gallery.js';
 import settingsRoutes from './routes/settings.js';
 import uploadRoutes from './routes/upload.js';
+import transactionRoutes from './routes/transactions.js';
 
 const app = new Hono().basePath('/api');
 
@@ -40,6 +41,7 @@ app.route('/contact', contactRoutes);
 app.route('/gallery', galleryRoutes);
 app.route('/settings', settingsRoutes);
 app.route('/upload', uploadRoutes);
+app.route('/transactions', transactionRoutes);
 
 // Health check
 app.get('/health', (c) => c.json({ status: 'ok', name: 'Lestari Farm API', timestamp: new Date().toISOString() }));

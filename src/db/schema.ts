@@ -16,6 +16,27 @@ export const blogStatusEnum = pgEnum('blog_status', [
   'published',
 ]);
 
+export const transactionTypeEnum = pgEnum('transaction_type', [
+  'income',
+  'expense',
+]);
+
+export const transactionCategoryEnum = pgEnum('transaction_category', [
+  // Income
+  'penjualan_ternak',
+  'penjualan_bibit',
+  'penjualan_qurban',
+  'produk_sampingan',
+  'pemasukan_lainnya',
+  // Expense
+  'pakan',
+  'kesehatan',
+  'operasional',
+  'pembelian_bibit',
+  'gaji',
+  'pengeluaran_lainnya',
+]);
+
 // ============================================================
 // Products
 // ============================================================
@@ -126,6 +147,21 @@ export const siteSettings = pgTable('site_settings', {
 });
 
 // ============================================================
+// Transactions (Cash Flow)
+// ============================================================
+
+export const transactions = pgTable('transactions', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  type: transactionTypeEnum('type').notNull(),
+  category: transactionCategoryEnum('category').notNull(),
+  amount: integer('amount').notNull(),
+  description: text('description').notNull().default(''),
+  date: timestamp('date').notNull().defaultNow(),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+});
+
+// ============================================================
 // Type exports
 // ============================================================
 
@@ -142,3 +178,5 @@ export type NewAdminUser = typeof adminUsers.$inferInsert;
 export type GalleryItem = typeof galleryItems.$inferSelect;
 export type NewGalleryItem = typeof galleryItems.$inferInsert;
 export type SiteSetting = typeof siteSettings.$inferSelect;
+export type Transaction = typeof transactions.$inferSelect;
+export type NewTransaction = typeof transactions.$inferInsert;
